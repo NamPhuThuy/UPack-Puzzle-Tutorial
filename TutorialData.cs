@@ -31,6 +31,12 @@ namespace NamPhuThuy.Tutorial
             EnsureIndex();
             return _dictData.GetValueOrDefault(levelId);
         }
+        
+        public bool isCurrentLevelHasTut(int levelId)
+        {
+            EnsureIndex();
+            return _dictData.ContainsKey(levelId);
+        }
 
         #region Unity Callbacks
 
@@ -94,21 +100,25 @@ namespace NamPhuThuy.Tutorial
     public class TutorialRecord
     {
         [SerializeField] private int levelId;
+        [SerializeField] private string tutTitle;
         [SerializeField] private List<BoosterRule> rules = new();
 
         [SerializeField] private bool isUnlockBooster;
 
         [SerializeField] private bool isUseTutorImage;
         [SerializeField] private Sprite tutorialImage;
+        [SerializeField] private string description;
 
         [Tooltip("Ordered steps that define the tutorial flow for this level")]
         [SerializeField] private List<TutorialStepRecord> steps = new();
         
         public int LevelId => levelId;
+        public string TutTitle => tutTitle;
         public List<BoosterRule> Rules => rules;
         public bool IsUnlockBooster => isUnlockBooster;
         public bool IsUseTutorImage => isUseTutorImage; 
         public Sprite TutorialImage => tutorialImage;
+        public string Description => description;
         public List<TutorialStepRecord> Steps => steps;
     }
     
@@ -118,10 +128,8 @@ namespace NamPhuThuy.Tutorial
     public enum TutorialStepType
     {
         NONE = 0,
-        SHOW_MESSAGE = 1,
-        HIGHLIGHT_WORLD_OBJECT = 2,
-        HIGHLIGHT_UI_ELEMENT = 3,
-        WAIT_FOR_CLICK = 4,
+        CLICK_THE_SOURCE = 1,
+        CLICK_THE_TARGET = 2,
         
         /// <summary>
         /// 

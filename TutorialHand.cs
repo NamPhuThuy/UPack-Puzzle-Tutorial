@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using NamPhuThuy.Common;
 using Spine.Unity;
 using UnityEngine;
+using UnityEngine.UI;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -16,6 +18,7 @@ namespace NamPhuThuy.Tutorial
         
         [Header("Components")]
         [SerializeField] private SkeletonGraphic handSkeGraphic;
+        [SerializeField] private Image handImage;
         [SerializeField] private Vector3 pivotOffset;
         [SerializeField] private Transform currentTarget;
         
@@ -55,43 +58,37 @@ namespace NamPhuThuy.Tutorial
 
         #endregion
 
-        
-
         #region Public Methods
         
-        
-
         private RectTransform rectTransform;
 
-        public void SetWorldPosition(Vector3 worldPos)
-        {
-            DebugLogger.Log();
-            transform.position = worldPos;
-        }
-
-        public void SetScreenPosition(Vector2 screenPos)
-        {
-            DebugLogger.Log();
-            if (rectTransform != null)
-            {
-                rectTransform.position = screenPos;
-            }
-            else
-            {
-                transform.position = screenPos;
-            }
-        }
-
+       
         public void EnableHand()
         {
             DebugLogger.Log();
-            handSkeGraphic.gameObject.SetActive(true);
+            if (handImage != null)
+            {
+               handImage.gameObject.SetActive(true);
+            }
+
+            if (handSkeGraphic != null)
+            {
+                handSkeGraphic.gameObject.SetActive(true);
+            }
         }
 
         public void DisableHand()
         {
             DebugLogger.Log();
-            handSkeGraphic.gameObject.SetActive(false);
+            if (handImage != null)
+            {
+                handImage.gameObject.SetActive(false);
+            }
+
+            if (handSkeGraphic != null)
+            {
+                handSkeGraphic.gameObject.SetActive(false);
+            }
         }
 
         public void FollowTransform(Transform tartget)
@@ -109,6 +106,34 @@ namespace NamPhuThuy.Tutorial
         #endregion
 
         #region Hand Control
+        
+        public void SetWorldPosition(Vector3 worldPos)
+        {
+            DebugLogger.Log();
+            transform.position = worldPos + pivotOffset;
+        }
+
+        public void SetScreenPosition(Vector2 screenPos)
+        {
+            DebugLogger.Log();
+            
+            // treat pivotOffset as screen\-space offset (x,y). z is ignored.
+            Vector3 screenWithOffset = new Vector3(
+                screenPos.x + pivotOffset.x,
+                screenPos.y + pivotOffset.y,
+                pivotOffset.z
+            );
+            
+            if (rectTransform != null)
+            {
+                rectTransform.position = screenWithOffset;
+            }
+            else
+            {
+                transform.position = screenWithOffset;
+            }
+        }
+
 
         public void MoveHandToWorldObject(Transform targetTransform)
         {
@@ -121,7 +146,7 @@ namespace NamPhuThuy.Tutorial
             SetWorldPosition(targetTransform.position);
         }
 
-        public void MoveHandToScreenPointFromWorld(Vector3 worldPosition)
+        public void MoveToScreenPointFromWorldFast(Vector3 worldPosition)
         {
             DebugLogger.Log();
             if (Camera.main == null)
@@ -131,6 +156,37 @@ namespace NamPhuThuy.Tutorial
             }
             Vector3 screenPos = Camera.main.WorldToScreenPoint(worldPosition);
             SetScreenPosition(screenPos);
+        }
+        
+        public void MoveToScreenPointFromWorldTween(Vector3 worldPosition, float duration = 0.5f)
+        {
+            DebugLogger.Log();
+            if (Camera.main == null)
+            {
+                DebugLogger.Log(message: "Return");
+                return;
+            }
+
+            Vector3 screenPos = Camera.main.WorldToScreenPoint(worldPosition);
+            
+            // apply offset before tween
+            Vector3 screenWithOffset = new Vector3(
+                screenPos.x + pivotOffset.x,
+                screenPos.y + pivotOffset.y,
+                pivotOffset.z
+            );
+
+            // Kill any existing tween on this transform/rectTransform if needed
+            if (rectTransform != null)
+            {
+                rectTransform.DOKill();
+                rectTransform.DOMove(screenWithOffset, duration);
+            }
+            else
+            {
+                transform.DOKill();
+                transform.DOMove(screenWithOffset, duration);
+            }
         }
 
         #endregion

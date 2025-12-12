@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace NamPhuThuy.Tutorial
 {
-    public class TutorialManager : Common.Singleton<TutorialManager>
+    public partial class TutorialManager : Common.Singleton<TutorialManager>
     {
         [Header("Flags")] 
         [SerializeField] private bool isEnable;

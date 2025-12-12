@@ -52,6 +52,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFollowing: 0
   handSkeGraphic: {fileID: 0}
+  handImage: {fileID: 1462492691430081516}
   pivotOffset: {x: 0, y: 0, z: 0}
   currentTarget: {fileID: 0}
 --- !u!222 &7995539225163732088
