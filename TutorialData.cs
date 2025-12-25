@@ -4,7 +4,7 @@ using NamPhuThuy.Tutorial;
 using UnityEditor;
 using UnityEngine;
 
-namespace NamPhuThuy.Tutorial
+namespace NamPhuThuy.PuzzleTutorial
 {
     [CreateAssetMenu(fileName = "TutorialData", menuName = "Game/Tutorial Data", order = 1)]
     public class TutorialData : ScriptableObject

@@ -9,7 +9,7 @@ using UnityEngine.UI;
 using UnityEditor;
 #endif
 
-namespace NamPhuThuy.Tutorial
+namespace NamPhuThuy.PuzzleTutorial
 {
     public class TutorialHand : MonoBehaviour
     {

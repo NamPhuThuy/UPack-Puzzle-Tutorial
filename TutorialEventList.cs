@@ -1,6 +1,6 @@
 using MoreMountains.Tools;
 
-namespace NamPhuThuy.Tutorial
+namespace NamPhuThuy.PuzzleTutorial
 {
     public struct ETutorialActivate
     {

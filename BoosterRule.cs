@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEditor;
 #endif
 
-namespace NamPhuThuy.Tutorial
+namespace NamPhuThuy.PuzzleTutorial
 {
     public enum LockOverride
     {

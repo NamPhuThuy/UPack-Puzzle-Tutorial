@@ -4,7 +4,7 @@ using NamPhuThuy.Common;
 using NamPhuThuy.Data;
 using UnityEngine;
 
-namespace NamPhuThuy.Tutorial
+namespace NamPhuThuy.PuzzleTutorial
 {
     public partial class TutorialManager : Common.Singleton<TutorialManager>
     {
