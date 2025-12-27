@@ -249,7 +249,7 @@ namespace NamPhuThuy.PuzzleTutorial
             }
         }
         
-        public void MoveToTargetRectTransformTween(RectTransform target, float duration = 0.5f)
+        public void MoveToTargetRectTransformTween(RectTransform target, float duration = 0.5f, Vector3 offset = default)
         {
             if (target == null) return;
 
@@ -275,7 +275,7 @@ namespace NamPhuThuy.PuzzleTutorial
             if (!RectTransformUtility.ScreenPointToLocalPointInRectangle(parentRect, screenPoint, cam, out Vector2 localPoint))
                 return;
 
-            Vector2 targetAnchoredPos = localPoint + (Vector2)pivotOffset;
+            Vector2 targetAnchoredPos = localPoint + (Vector2)pivotOffset + (Vector2)offset;
 
             rectTransform.DOKill();
             rectTransform.DOAnchorPos(targetAnchoredPos, duration);
