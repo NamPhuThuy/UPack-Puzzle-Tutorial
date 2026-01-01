@@ -1,6 +1,6 @@
 using System;
 using NamPhuThuy.Common;
-using NamPhuThuy.Data;
+using NamPhuThuy.DataManage;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
